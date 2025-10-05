@@ -1,35 +1,45 @@
+// app/api/email/route.ts
+
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
-  try {
-    const { subject, message, userEmail } = await req.json();
+  try {
+    const { subject, message, userEmail } = await req.json();
 
-    if (!subject || !message) {
-      return NextResponse.json(
-        { error: "Subject and message are required" },
-        { status: 400 }
-      );
+    if (!subject || !message) {
+      return NextResponse.json(
+        { error: "Subject and message are required" },
+        { status: 400 }
+      );
+    }
+
+    const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, ADMIN_EMAIL } = process.env;
+
+    if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS || !ADMIN_EMAIL) {
+        console.error("Missing critical SMTP environment variables!");
+        return NextResponse.json(
+            { error: "Server configuration error: Email credentials missing." },
+            { status: 500 }
+        );
     }
 
-    // Create SMTP transporter using your Gmail or SMTP service
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT) || 465,
-      secure: true, // true for port 465, false for 587
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
+    // Create SMTP transporter using your Gmail or SMTP service
+    const transporter = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: Number(SMTP_PORT) || 465,
+      secure: true, // true for port 465, false for 587
+      auth: {
+        user: SMTP_USER,
+        pass: SMTP_PASS,
+      },
+    });
 
-    const adminEmail = process.env.ADMIN_EMAIL; // your email to receive orders
-
-    const mailOptions = {
-      from: userEmail || process.env.SMTP_USER, // show user's email if provided
-      to: adminEmail,
-      subject: subject,
-      text: `
+    const mailOptions = {
+      from: userEmail || SMTP_USER, // show user's email if provided
+      to: ADMIN_EMAIL,
+      subject: subject,
+      text: `
 📦 New Order Received
 
 ${message}
@@ -37,16 +47,16 @@ ${message}
 ----------------------------
 From: ${userEmail || "No email provided"}
 `,
-    };
+    };
 
-    await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
 
-    return NextResponse.json({ success: true });
-  } catch (err: any) {
-    console.error("Email send failed:", err);
-    return NextResponse.json(
-      { error: "Email send failed", details: err.message },
-      { status: 500 }
-    );
-  }
+    return NextResponse.json({ success: true });
+  } catch (err: any) {
+    console.error("Email send failed:", err);
+    return NextResponse.json(
+      { error: "Email send failed", details: err.message },
+      { status: 500 }
+    );
+  }
 }
