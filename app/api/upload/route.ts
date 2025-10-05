@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 
 // Cloudinary config
 cloudinary.config({
-  cloud_name: "dqxkd1di3",
-  api_key: "537647515185984",
-  api_secret: "lqIRQye6Ajz39sEBX0mmAfACEy0",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+  api_key: process.env.CLOUDINARY_API_KEY!,
+  api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
 export async function POST(req: Request) {
