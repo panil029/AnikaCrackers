@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "cloudinary": "^2.7.0",
     "fs-extra": "^11.3.2",
     "multer": "^2.0.2",
     "next": "15.5.4",
