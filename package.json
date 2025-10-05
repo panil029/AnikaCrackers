@@ -10,7 +10,6 @@
   "dependencies": {
     "cloudinary": "^2.7.0",
     "fs-extra": "^11.3.2",
-    "multer": "^2.0.2",
     "next": "15.5.4",
     "nodemailer": "^7.0.6",
     "react": "19.1.0",
