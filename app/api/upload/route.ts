@@ -1,68 +1,82 @@
-// app/api/upload/route.ts
-
-import { cloudinary } from "@/lib/cloudinary"; // 💡 FIX: Import configured instance
-import { readCrackersData, writeCrackersData } from "@/lib/data";
 import { NextResponse } from "next/server";
+import fs from "fs-extra";
+import path from "path";
+
+export const runtime = "nodejs";
+
+const imagesDir = path.join(process.cwd(), "public", "images");
+const dataFile = path.join(process.cwd(), "data", "crackers.json");
+
+fs.ensureDirSync(imagesDir);
+fs.ensureFileSync(dataFile);
+if (!fs.readFileSync(dataFile, "utf8")) fs.writeFileSync(dataFile, "[]");
 
 export async function POST(req: Request) {
-    // Check if Cloudinary object is ready (based on lib/cloudinary.ts check)
-    if (!cloudinary.config().cloud_name) {
-        return NextResponse.json(
-            { error: "Server error: Cloudinary service not configured." }, 
-            { status: 503 }
-        );
+  try {
+    const form = await req.formData();
+    const name = form.get("name") as string;
+    const priceRaw = form.get("price") as string;
+    const price = parseFloat(priceRaw || "0");
+    // file is a Web File
+    const file = form.get("image") as File | null;
+
+    // If editing an existing item, admin may send 'filenameToKeep' to not replace image
+    const existingFilename = form.get("existingFilename") as string | null;
+
+    let filename = existingFilename || null;
+
+    if (file && file.size > 0) {
+      // write file to disk
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      // create safe filename
+      const safeName = `${Date.now()}-${file.name.replace(/\s+/g, "_")}`;
+      filename = safeName;
+      const dest = path.join(imagesDir, safeName);
+      await fs.writeFile(dest, buffer);
     }
 
-    try {
-        const formData = await req.formData();
-        // Keys must match the client-side formData.append calls
-        const file = formData.get("image") as File | null; 
-        const name = formData.get("name") as string;
-        const price = formData.get("price") as string;
+    // read crackers
+    const raw = await fs.readFile(dataFile, "utf8");
+    const crackers = JSON.parse(raw || "[]");
 
-        if (!file || !name || !price) {
-            return NextResponse.json(
-                { error: "Image file, name, and price are required." }, 
-                { status: 400 }
-            );
+    // if existingFilename provided + an index (edit scenario) — find by existingFilename and update
+    const editId = form.get("editId") as string | null;
+    if (editId) {
+      const idx = crackers.findIndex((c: any) => String(c.id) === String(editId));
+      if (idx !== -1) {
+        // if filename changed (new upload), delete old file
+        if (filename && crackers[idx].imageFilename && crackers[idx].imageFilename !== filename) {
+          const oldPath = path.join(imagesDir, crackers[idx].imageFilename);
+          if (await fs.pathExists(oldPath)) await fs.remove(oldPath);
         }
-
-        // Convert File → Buffer
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-
-        // Upload to Cloudinary
-        const uploadResult: any = await new Promise((resolve, reject) => {
-            const stream = cloudinary.uploader.upload_stream(
-                { folder: "crackers" },
-                (error, result) => {
-                    if (error) reject(error);
-                    else resolve(result);
-                }
-            );
-            stream.end(buffer);
-        });
-
-        // 💡 NEW: After successful Cloudinary upload, save data to crackers.json
-        const crackers = await readCrackersData();
-
-        const newCracker = {
-            id: Date.now(),
-            name,
-            price,
-            imageUrl: uploadResult.secure_url, // Use the public URL
-        };
-
-        crackers.push(newCracker);
-        await writeCrackersData(crackers);
-
-        return NextResponse.json(newCracker);
-
-    } catch (err: any) {
-        console.error("Upload and save cracker error:", err);
-        return NextResponse.json(
-            { error: "Failed to upload image or save cracker data", details: err.message },
-            { status: 500 }
-        );
+        crackers[idx].name = name || crackers[idx].name;
+        crackers[idx].price = isNaN(price) ? crackers[idx].price : price;
+        crackers[idx].image = filename ? `/images/${filename}` : crackers[idx].image;
+        crackers[idx].imageFilename = filename || crackers[idx].imageFilename;
+        await fs.writeFile(dataFile, JSON.stringify(crackers, null, 2));
+        return NextResponse.json(crackers[idx]);
+      } else {
+        return NextResponse.json({ error: "Not found" }, { status: 404 });
+      }
     }
+
+    // create new cracker
+    if (!filename) {
+      return NextResponse.json({ error: "Image required" }, { status: 400 });
+    }
+    const newCracker = {
+      id: Date.now(),
+      name: name || "Untitled",
+      price: isNaN(price) ? 0 : price,
+      image: `/images/${filename}`,
+      imageFilename: filename
+    };
+    crackers.push(newCracker);
+    await fs.writeFile(dataFile, JSON.stringify(crackers, null, 2));
+    return NextResponse.json(newCracker);
+  } catch (err: any) {
+    console.error(err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }

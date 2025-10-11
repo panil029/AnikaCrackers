@@ -1,186 +1,186 @@
-// app/admin/page.tsx
-
 "use client";
 
-import { useState, useEffect, FormEvent } from "react";
+import { useEffect, useState } from "react";
 
-interface Cracker {
+type Cracker = {
   id: number;
   name: string;
-  price: string;
-  imageUrl: string;
-}
+  price: number;
+  image: string;
+  imageFilename: string;
+};
+
+const ADMIN_PASS = "crackeradmin123"; // change as needed
 
 export default function AdminPage() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [pass, setPass] = useState("");
   const [crackers, setCrackers] = useState<Cracker[]>([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [file, setFile] = useState<File | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  const loadCrackers = async () => {
+  const [editing, setEditing] = useState<Cracker | null>(null);
+  const [editName, setEditName] = useState("");
+  const [editPrice, setEditPrice] = useState("");
+  const [editFile, setEditFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    const saved = sessionStorage.getItem("isAdmin");
+    if (saved === "true") {
+      setAuthenticated(true);
+      load();
+    }
+  }, []);
+
+  async function load() {
     const res = await fetch("/api/crackers");
     const data = await res.json();
     setCrackers(data);
-    setLoading(false);
-  };
+  }
 
-  useEffect(() => {
-    loadCrackers();
-  }, []);
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    if (!name || !price || !file) {
-      alert("Name, price, and image are required.");
-      return;
+  function login() {
+    if (pass === ADMIN_PASS) {
+      sessionStorage.setItem("isAdmin", "true");
+      setAuthenticated(true);
+      load();
+    } else {
+      alert("Incorrect passcode");
     }
+  }
 
-    setLoading(true);
-
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("price", price);
-    formData.append("image", file); // Key must match API route's formData.get("image")
-
-    try {
-      // 💡 NEW: Upload route handles both Cloudinary upload and JSON save
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Failed to add cracker.");
-      }
-
-      await loadCrackers(); // Reload data
-      
-      // Clear form
+  async function uploadNew() {
+    if (!name || !price || !file) return alert("Please fill all fields and select an image");
+    const fd = new FormData();
+    fd.append("name", name);
+    fd.append("price", price);
+    fd.append("image", file);
+    const res = await fetch("/api/upload", { method: "POST", body: fd });
+    if (res.ok) {
       setName("");
       setPrice("");
       setFile(null);
-      (document.getElementById("file-input") as HTMLInputElement).value = ""; // Clear file input
-      
-    } catch (error: any) {
-      alert(`Error: ${error.message}`);
-      setLoading(false);
+      await load();
+    } else {
+      alert("Upload failed");
     }
-  };
+  }
 
-  const handleDelete = async (id: number) => {
-    if (!confirm("Are you sure you want to delete this cracker?")) return;
+  function startEdit(c: Cracker) {
+    setEditing(c);
+    setEditName(c.name);
+    setEditPrice(String(c.price));
+    setEditFile(null);
+  }
 
-    setLoading(true);
-
-    try {
-      const res = await fetch("/api/crackers/delete", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to delete cracker.");
-      }
-
-      await loadCrackers(); // Reload data
-    } catch (error: any) {
-      alert(`Error: ${error.message}`);
-      setLoading(false);
+  async function saveEdit() {
+    if (!editing) return;
+    const fd = new FormData();
+    fd.append("editId", String(editing.id));
+    fd.append("name", editName);
+    fd.append("price", editPrice);
+    // include existingFilename so back-end knows if no new file uploaded
+    fd.append("existingFilename", editing.imageFilename);
+    if (editFile) fd.append("image", editFile);
+    const res = await fetch("/api/upload", { method: "POST", body: fd });
+    if (res.ok) {
+      setEditing(null);
+      await load();
+    } else {
+      alert("Update failed");
     }
-  };
+  }
 
-  if (loading)
+  async function deleteByFilename(filename: string) {
+    if (!confirm("Delete this cracker and its image?")) return;
+    const res = await fetch("/api/delete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ filename })
+    });
+    if (res.ok) {
+      await load();
+    } else {
+      alert("Delete failed");
+    }
+  }
+
+  if (!authenticated) {
     return (
-      <div className="flex justify-center items-center h-screen text-xl font-medium text-gray-600">
-        Loading admin panel...
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="bg-white p-8 rounded shadow w-full max-w-md">
+          <h2 className="text-2xl mb-4">Admin - Enter Passcode</h2>
+          <input
+            type="password"
+            className="w-full p-2 border rounded mb-3"
+            placeholder="Passcode"
+            value={pass}
+            onChange={(e) => setPass(e.target.value)}
+          />
+          <div className="flex gap-2">
+            <button onClick={login} className="bg-blue-600 text-white px-4 py-2 rounded">
+              Enter
+            </button>
+          </div>
+        </div>
       </div>
     );
+  }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-4xl font-bold text-center text-pink-600 mb-8">
-        🌸 Admin Panel 🌸
-      </h1>
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">💥 Crackers Admin</h1>
+        <div>
+          <button
+            onClick={() => {
+              sessionStorage.removeItem("isAdmin");
+              setAuthenticated(false);
+            }}
+            className="bg-red-500 text-white px-3 py-1 rounded"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-2xl p-6 mb-10 max-w-4xl mx-auto flex flex-wrap gap-4 items-end"
-      >
-        <div className="flex-1 min-w-[200px]">
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-          <input
-            id="name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-            required
-          />
-        </div>
-        <div className="flex-1 min-w-[100px]">
-          <label htmlFor="price" className="block text-sm font-medium text-gray-700">Price (₹)</label>
-          <input
-            id="price"
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-            step="0.01"
-            required
-          />
-        </div>
-        <div className="flex-1 min-w-[250px]">
-          <label htmlFor="file-input" className="block text-sm font-medium text-gray-700">Image</label>
-          <input
-            id="file-input"
-            type="file"
-            onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
-            className="mt-1 block w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100"
-            accept="image/*"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition h-fit disabled:opacity-50"
-          disabled={loading}
-        >
-          Add
-        </button>
-      </form>
+      {/* Add new */}
+      <div className="bg-white p-4 rounded shadow mb-6 flex flex-wrap gap-3">
+        <input className="border p-2 rounded w-64" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+        <input className="border p-2 rounded w-40" placeholder="Price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+        <input className="border p-2 rounded" type="file" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+        <button onClick={uploadNew} className="bg-green-600 text-white px-4 py-2 rounded">Add Cracker</button>
+      </div>
 
-      {/* Cracker Display Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-        {crackers.length === 0 ? (
-          <p className="col-span-full text-center text-gray-600">No crackers added yet!</p>
-        ) : (
-          crackers.map((cracker) => (
-            <div
-              key={cracker.id}
-              className="bg-white shadow-md rounded-2xl p-4 text-center"
-            >
-              <img
-                src={cracker.imageUrl}
-                alt={cracker.name}
-                className="w-full h-48 object-cover rounded-xl"
-              />
-              <h3 className="mt-3 text-lg font-semibold text-gray-800">
-                {cracker.name}
-              </h3>
-              <p className="text-green-600 font-bold">₹{cracker.price}</p>
-              <button
-                onClick={() => handleDelete(cracker.id)}
-                className="bg-red-500 text-white mt-3 px-5 py-2 rounded-lg hover:bg-red-600 transition"
-              >
-                Delete
-              </button>
+      {/* Grid */}
+      <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        {crackers.map((c) => (
+          <div key={c.imageFilename} className="bg-white rounded shadow overflow-hidden">
+            <img src={c.image} alt={c.name} className="w-full h-48 object-cover" />
+            <div className="p-3 text-center">
+              {editing && editing.id === c.id ? (
+                <>
+                  <input className="w-full border p-1 rounded mb-2" value={editName} onChange={(e) => setEditName(e.target.value)} />
+                  <input className="w-full border p-1 rounded mb-2" type="number" value={editPrice} onChange={(e) => setEditPrice(e.target.value)} />
+                  <input className="w-full mb-2" type="file" onChange={(e) => setEditFile(e.target.files?.[0] ?? null)} />
+                  <div className="flex justify-center gap-2">
+                    <button onClick={saveEdit} className="bg-blue-600 text-white px-3 py-1 rounded">Save</button>
+                    <button onClick={() => setEditing(null)} className="bg-gray-300 px-3 py-1 rounded">Cancel</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h3 className="font-semibold">{c.name}</h3>
+                  <p className="text-green-700">₹{c.price}</p>
+                  <div className="flex justify-center gap-2 mt-2">
+                    <button onClick={() => startEdit(c)} className="bg-yellow-400 px-3 py-1 rounded">Edit</button>
+                    <button onClick={() => deleteByFilename(c.imageFilename)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                  </div>
+                </>
+              )}
             </div>
-          ))
-        )}
+          </div>
+        ))}
       </div>
     </div>
   );
