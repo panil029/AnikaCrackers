@@ -2,81 +2,27 @@ import { NextResponse } from "next/server";
 import fs from "fs-extra";
 import path from "path";
 
-export const runtime = "nodejs";
+const dataFile = path.join(process.cwd(), "app", "data", "crackers.json");
+const uploadDir = path.join(process.cwd(), "public");
 
-const imagesDir = path.join(process.cwd(), "public", "images");
-const dataFile = path.join(process.cwd(), "data", "crackers.json");
-
-fs.ensureDirSync(imagesDir);
-fs.ensureFileSync(dataFile);
-if (!fs.readFileSync(dataFile, "utf8")) fs.writeFileSync(dataFile, "[]");
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
-  try {
-    const form = await req.formData();
-    const name = form.get("name") as string;
-    const priceRaw = form.get("price") as string;
-    const price = parseFloat(priceRaw || "0");
-    // file is a Web File
-    const file = form.get("image") as File | null;
+  const formData = await req.formData();
+  const name = formData.get("name") as string;
+  const price = formData.get("price") as string;
+  const file = formData.get("image") as File;
 
-    // If editing an existing item, admin may send 'filenameToKeep' to not replace image
-    const existingFilename = form.get("existingFilename") as string | null;
+  if (!file) return NextResponse.json({ error: "No file" }, { status: 400 });
 
-    let filename = existingFilename || null;
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+  const filePath = path.join(uploadDir, file.name);
+  await fs.writeFile(filePath, buffer);
 
-    if (file && file.size > 0) {
-      // write file to disk
-      const arrayBuffer = await file.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-      // create safe filename
-      const safeName = `${Date.now()}-${file.name.replace(/\s+/g, "_")}`;
-      filename = safeName;
-      const dest = path.join(imagesDir, safeName);
-      await fs.writeFile(dest, buffer);
-    }
+  const crackers = (await fs.readJSON(dataFile).catch(() => [])) || [];
+  crackers.push({ name, price, image: file.name });
 
-    // read crackers
-    const raw = await fs.readFile(dataFile, "utf8");
-    const crackers = JSON.parse(raw || "[]");
-
-    // if existingFilename provided + an index (edit scenario) — find by existingFilename and update
-    const editId = form.get("editId") as string | null;
-    if (editId) {
-      const idx = crackers.findIndex((c: any) => String(c.id) === String(editId));
-      if (idx !== -1) {
-        // if filename changed (new upload), delete old file
-        if (filename && crackers[idx].imageFilename && crackers[idx].imageFilename !== filename) {
-          const oldPath = path.join(imagesDir, crackers[idx].imageFilename);
-          if (await fs.pathExists(oldPath)) await fs.remove(oldPath);
-        }
-        crackers[idx].name = name || crackers[idx].name;
-        crackers[idx].price = isNaN(price) ? crackers[idx].price : price;
-        crackers[idx].image = filename ? `/images/${filename}` : crackers[idx].image;
-        crackers[idx].imageFilename = filename || crackers[idx].imageFilename;
-        await fs.writeFile(dataFile, JSON.stringify(crackers, null, 2));
-        return NextResponse.json(crackers[idx]);
-      } else {
-        return NextResponse.json({ error: "Not found" }, { status: 404 });
-      }
-    }
-
-    // create new cracker
-    if (!filename) {
-      return NextResponse.json({ error: "Image required" }, { status: 400 });
-    }
-    const newCracker = {
-      id: Date.now(),
-      name: name || "Untitled",
-      price: isNaN(price) ? 0 : price,
-      image: `/images/${filename}`,
-      imageFilename: filename
-    };
-    crackers.push(newCracker);
-    await fs.writeFile(dataFile, JSON.stringify(crackers, null, 2));
-    return NextResponse.json(newCracker);
-  } catch (err: any) {
-    console.error(err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
-  }
+  await fs.writeJSON(dataFile, crackers, { spaces: 2 });
+  return NextResponse.json({ success: true });
 }
