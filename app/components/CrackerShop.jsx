@@ -46,7 +46,8 @@ export default function CrackerShop({ crackers }) {
 
   return (
     <div className="user-container">
-      <header><h1>💥 Cracker Shop 💥</h1></header>
+       <header> <h1>|| Shree Ganeshay Namah ||</h1> 
+      <h1>💥 Cracker Shop 💥</h1></header>
       <main className="product-grid">
         {crackers.map((cracker) => (
           <div key={cracker.id} className="product-card">
