@@ -4,5 +4,59 @@
     "name": "saddam",
     "price": "54",
     "imageUrl": "/uploads/images/1760279190470-saddam.png"
+  },
+  {
+    "id": 1760296086574,
+    "name": "Deluxe Chakkar genis",
+    "price": "160",
+    "imageUrl": "/uploads/images/1760296086561-Deluxe_Chakkar_genis.png"
+  },
+  {
+    "id": 1760296166836,
+    "name": "Anil Rocket Bomb",
+    "price": "140",
+    "imageUrl": "/uploads/images/1760296166823-Anil_Rocket_Bomb.png"
+  },
+  {
+    "id": 1760296314860,
+    "name": "10000 Lad branded",
+    "price": "2000",
+    "imageUrl": "/uploads/images/1760296314849-1000_Lad_branded.jpg"
+  },
+  {
+    "id": 1760296437536,
+    "name": "5000 Lad branded",
+    "price": "850",
+    "imageUrl": "/uploads/images/1760296437526-5000_Lad_branded.jpg"
+  },
+  {
+    "id": 1760296510395,
+    "name": "Multi Colour Branded 60 shot",
+    "price": "950",
+    "imageUrl": "/uploads/images/1760296510386-Multi_Colour_Branded_60_shot.jpg"
+  },
+  {
+    "id": 1760296627785,
+    "name": "Sky 30 shots Branded",
+    "price": "450",
+    "imageUrl": "/uploads/images/1760296627775-Sky_30_shots_Branded.jpg"
+  },
+  {
+    "id": 1760296692602,
+    "name": "Fancy Photo Flash",
+    "price": "80",
+    "imageUrl": "/uploads/images/1760296692591-Fancy_Photo_Flash.jpg"
+  },
+  {
+    "id": 1760296749992,
+    "name": "Multicolor Branded Butterfly",
+    "price": "90",
+    "imageUrl": "/uploads/images/1760296749983-Screenshot_2025-10-13_004850.jpg"
+  },
+  {
+    "id": 1760296823326,
+    "name": "Anil Jupiter Rocket",
+    "price": "200",
+    "imageUrl": "/uploads/images/1760296823318-Screenshot_2025-10-13_004941.jpg"
   }
 ]
