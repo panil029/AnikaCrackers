@@ -460,5 +460,11 @@
     "name": "LASUN (1 box - 50 PACKET) [1 packet - Rs 4.6]",
     "price": "230",
     "imageUrl": "/uploads/images/1760303017419-Screenshot_2025-10-13_023250.jpg"
+  },
+  {
+    "id": 1760304732191,
+    "name": "Bidi Bomb (1 Box - 10 Packet)",
+    "price": "130",
+    "imageUrl": "/uploads/images/1760304732182-Screenshot_2025-10-13_030150.jpg"
   }
 ]
