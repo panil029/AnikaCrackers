@@ -121,8 +121,8 @@
   },
   {
     "id": 1760298200101,
-    "name": "Sri Flower Pot Special",
-    "price": "80",
+    "name": "chunmun color changing",
+    "price": "400",
     "imageUrl": "/uploads/images/1760298200092-Screenshot_2025-10-13_011246.jpg"
   },
   {
@@ -152,7 +152,7 @@
   {
     "id": 1760298795556,
     "name": "120 Shots JOY",
-    "price": "1580",
+    "price": "1410",
     "imageUrl": "/uploads/images/1760298795546-Screenshot_2025-10-13_012207.jpg"
   },
   {
@@ -181,20 +181,20 @@
   },
   {
     "id": 1760299176983,
-    "name": "2 Inch Tof",
-    "price": "38",
+    "name": "Magic color fountain",
+    "price": "32",
     "imageUrl": "/uploads/images/1760299176973-Screenshot_2025-10-13_012855.jpg"
   },
   {
     "id": 1760299191972,
     "name": "1 Inch Tof",
     "price": "30",
-    "imageUrl": "/uploads/images/1760299191961-Screenshot_2025-10-13_012855.jpg"
+    "imageUrl": "/uploads/images/1760306692888-Screenshot_2025-10-13_013125.jpg"
   },
   {
     "id": 1760299319648,
-    "name": "Tof (tauf)",
-    "price": "35",
+    "name": "2 inch Tof (tauf)",
+    "price": "38",
     "imageUrl": "/uploads/images/1760299319639-Screenshot_2025-10-13_013125.jpg"
   },
   {
@@ -284,7 +284,7 @@
   {
     "id": 1760300766137,
     "name": "Anil Chakkar (Wheel)",
-    "price": "210",
+    "price": "110",
     "imageUrl": "/uploads/images/1760300766128-Screenshot_2025-10-13_015447.jpg"
   },
   {
@@ -296,13 +296,13 @@
   {
     "id": 1760301027772,
     "name": "Dil Khush 50 shot",
-    "price": "620",
+    "price": "750",
     "imageUrl": "/uploads/images/1760301027763-Screenshot_2025-10-13_015838.jpg"
   },
   {
     "id": 1760301061885,
     "name": "Kitkat",
-    "price": "30",
+    "price": "27",
     "imageUrl": "/uploads/images/1760301061874-Screenshot_2025-10-13_020042.jpg"
   },
   {
@@ -326,7 +326,7 @@
   {
     "id": 1760301342446,
     "name": "Standard Flower Pot Special",
-    "price": "160",
+    "price": "180",
     "imageUrl": "/uploads/images/1760301342433-Screenshot_2025-10-13_020509.jpg"
   },
   {
