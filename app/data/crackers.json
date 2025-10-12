@@ -253,9 +253,9 @@
   },
   {
     "id": 1760300322672,
-    "name": "ANIL's OYE! Its 100 shots",
+    "name": "ANIL OYE! Its 100 shots",
     "price": "1400",
-    "imageUrl": "/uploads/images/1760300322664-Screenshot_2025-10-13_014746.jpg"
+    "imageUrl": "/uploads/images/1760303054875-Screenshot_2025-10-13_014746.jpg"
   },
   {
     "id": 1760300411828,
@@ -454,5 +454,11 @@
     "name": "30cm(5 piece) Sursuri Red color",
     "price": "48",
     "imageUrl": "/uploads/images/1760302758975-Screenshot_2025-10-13_022348.jpg"
+  },
+  {
+    "id": 1760303017428,
+    "name": "LASUN (1 box - 50 PACKET) [1 packet - Rs 4.6]",
+    "price": "230",
+    "imageUrl": "/uploads/images/1760303017419-Screenshot_2025-10-13_023250.jpg"
   }
 ]
