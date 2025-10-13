@@ -8,7 +8,7 @@
   {
     "id": 1760296086574,
     "name": "Deluxe Chakkar genis",
-    "price": "160",
+    "price": "180",
     "imageUrl": "/uploads/images/1760296086561-Deluxe_Chakkar_genis.png"
   },
   {
@@ -466,5 +466,29 @@
     "name": "Bidi Bomb (1 Box - 10 Packet)",
     "price": "130",
     "imageUrl": "/uploads/images/1760304732182-Screenshot_2025-10-13_030150.jpg"
+  },
+  {
+    "id": 1760336458448,
+    "name": "Fancy Motha Flower Pot Deluxe Chunmun",
+    "price": "540",
+    "imageUrl": "/uploads/images/1760336458445-Screenshot_2025-10-13_114944.jpg"
+  },
+  {
+    "id": 1760336595246,
+    "name": "Anil Fancy Manoranjan",
+    "price": "250",
+    "imageUrl": "/uploads/images/1760336595239-Screenshot_2025-10-13_115208.jpg"
+  },
+  {
+    "id": 1760336783378,
+    "name": "Jenis Deluxe Chakri",
+    "price": "180",
+    "imageUrl": "/uploads/images/1760336783375-Screenshot_2025-10-13_115548.jpg"
+  },
+  {
+    "id": 1760336905025,
+    "name": "Jenis Super Deluxe Chakri motha",
+    "price": "270",
+    "imageUrl": "/uploads/images/1760336905017-Screenshot_2025-10-13_115813.jpg"
   }
 ]
