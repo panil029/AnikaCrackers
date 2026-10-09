@@ -89,6 +89,18 @@ export default function CrackerShop({ crackers }) {
         {sortedCrackers.map((cracker) => (
           <div key={cracker.id} className="product-card">
             <img src={cracker.imageUrl} alt={cracker.name} />
+
+            {cracker.videoUrl?.trim() && (
+              <a
+                href={cracker.videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="video-link"
+              >
+                Watch video here!
+              </a>
+            )}
+            
             <h3>{cracker.name}</h3>
             <p className="price">₹{cracker.price}</p>
             <div className="cart-controls">
@@ -160,6 +172,18 @@ export default function CrackerShop({ crackers }) {
           background: #f8f8f8;
           padding: 15px;
           border-radius: 8px;
+        }
+        .video-link {
+          display: block;
+          margin-top: 8px;
+          color: #0070f3;
+          text-decoration: underline;
+          font-size: 14px;
+          font-weight: 600;
+        }
+        
+        .video-link:hover {
+          color: #005bb5;
         }
         .download-btn {
           margin-top: 10px;
