@@ -131,71 +131,209 @@ export default function CrackerShop({ crackers }) {
 
       <style jsx>{`
         .user-container {
+          min-height: 100vh;
+          padding: 28px 24px;
           text-align: center;
-          padding: 20px;
+          background: #fff9f0;
+          color: #302820;
+          font-family: Arial, Helvetica, sans-serif;
         }
+        
         header {
-          margin-bottom: 20px;
+          margin-bottom: 24px;
+          padding: 20px 12px;
+          background: #702632;
+          color: #fffaf2;
+          border-bottom: 4px solid #d4a64a;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(75, 35, 25, 0.12);
         }
+        
+        header h1 {
+          margin: 8px 0 14px;
+          line-height: 1.4;
+          font-size: clamp(20px, 2.5vw, 30px);
+          font-weight: 700;
+        }
+        
         .sort-controls {
           display: flex;
           justify-content: center;
-          gap: 20px;
-          margin-bottom: 20px;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 12px 24px;
+          margin-bottom: 24px;
+          color: #702632;
+          font-weight: 600;
         }
+        
+        .sort-controls label {
+          cursor: pointer;
+        }
+        
+        .sort-controls input {
+          accent-color: #702632;
+          margin-right: 6px;
+        }
+        
         .product-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
           gap: 20px;
+          max-width: 1250px;
+          margin: 0 auto;
         }
+        
         .product-card {
-          border: 1px solid #ddd;
-          border-radius: 8px;
-          padding: 10px;
-          background: #fff;
+          min-width: 0;
+          padding: 12px;
+          background: #ffffff;
+          border: 1px solid #e5d4b8;
+          border-bottom: 4px solid #d4a64a;
+          border-radius: 12px;
+          box-shadow: 0 3px 10px rgba(75, 35, 25, 0.08);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+        
+        .product-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 7px 18px rgba(75, 35, 25, 0.14);
+        }
+        
         .product-card img {
+          display: block;
           width: 100%;
           height: 150px;
           object-fit: cover;
-          border-radius: 6px;
+          border-radius: 8px;
+          background: #f5eee3;
         }
+        
+        .product-card h3 {
+          min-height: 42px;
+          margin: 12px 0 8px;
+          color: #702632;
+          font-size: 15px;
+          line-height: 1.4;
+        }
+        
+        .video-link {
+          display: block;
+          margin: 8px 0;
+          color: #8b4b08;
+          font-size: 13px;
+          font-weight: 700;
+          text-decoration: underline;
+        }
+        
+        .video-link:hover {
+          color: #702632;
+        }
+        
+        .price {
+          margin: 12px 0;
+          color: #238447;
+          font-size: 17px;
+          font-weight: 700;
+        }
+        
         .cart-controls {
           display: flex;
           justify-content: center;
           align-items: center;
-          gap: 10px;
-          margin-top: 10px;
-        }
-        .cart-summary {
-          margin-top: 30px;
-          background: #f8f8f8;
-          padding: 15px;
-          border-radius: 8px;
-        }
-        .video-link {
-          display: block;
-          margin-top: 8px;
-          color: #0070f3;
-          text-decoration: underline;
-          font-size: 14px;
-          font-weight: 600;
+          gap: 12px;
+          margin-top: 16px;
         }
         
-        .video-link:hover {
-          color: #005bb5;
-        }
-        .download-btn {
-          margin-top: 10px;
-          padding: 10px 20px;
-          background-color: #0070f3;
-          color: white;
-          border: none;
-          border-radius: 6px;
+        .cart-controls button {
+          width: 36px;
+          height: 36px;
+          border: 1px solid #d9c7ad;
+          border-radius: 50%;
+          background: #fff9f0;
+          color: #702632;
+          font-size: 20px;
+          font-weight: 700;
           cursor: pointer;
+          transition: background 0.2s ease;
         }
+        
+        .cart-controls button:hover:not(:disabled) {
+          background: #f1dfc0;
+        }
+        
+        .cart-controls button:disabled {
+          opacity: 0.45;
+          cursor: not-allowed;
+        }
+        
+        .cart-controls span {
+          min-width: 16px;
+          font-weight: 700;
+        }
+        
+        .cart-summary {
+          max-width: 600px;
+          margin: 32px auto 0;
+          padding: 22px;
+          background: #ffffff;
+          border: 1px solid #e5d4b8;
+          border-top: 4px solid #d4a64a;
+          border-radius: 12px;
+          box-shadow: 0 4px 14px rgba(75, 35, 25, 0.08);
+        }
+        
+        .cart-summary h2 {
+          color: #702632;
+        }
+        
+        .total {
+          color: #238447;
+          font-size: 20px;
+        }
+        
+        .download-btn {
+          margin-top: 14px;
+          padding: 12px 24px;
+          background: #702632;
+          color: #ffffff;
+          border: 1px solid #702632;
+          border-radius: 8px;
+          font-size: 15px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: background 0.2s ease;
+        }
+        
         .download-btn:hover {
-          background-color: #005bb5;
+          background: #541b25;
+        }
+        
+        @media (max-width: 600px) {
+          .user-container {
+            padding: 14px 10px;
+          }
+        
+          header {
+            padding: 14px 8px;
+          }
+        
+          .product-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+          }
+        
+          .product-card {
+            padding: 8px;
+          }
+        
+          .product-card img {
+            height: 125px;
+          }
+        
+          .cart-controls {
+            gap: 8px;
+          }
         }
       `}</style>
     </div>
