@@ -221,8 +221,8 @@ export default function CrackerShop({ crackers }) {
           display: block;
           margin: 8px 0;
           color: #8b4b08;
-          font-size: 13px;
-          font-weight: 700;
+          font-size: 15px;
+          font-weight: 900;
           text-decoration: underline;
         }
         
