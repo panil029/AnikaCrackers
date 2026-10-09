@@ -3,13 +3,15 @@
     "id": 1760279190475,
     "name": "saddam",
     "price": "54",
-    "imageUrl": "/uploads/images/1760279190470-saddam.png"
+    "imageUrl": "/uploads/images/1760279190470-saddam.png",
+    "videoUrl": "https://www.youtube.com/watch?v=VIDEO_ID"
   },
   {
     "id": 1760296086574,
     "name": "Deluxe Chakkar genis",
     "price": "180",
-    "imageUrl": "/uploads/images/1760296086561-Deluxe_Chakkar_genis.png"
+    "imageUrl": "/uploads/images/1760296086561-Deluxe_Chakkar_genis.png",
+    "videoUrl": "https://www.youtube.com/watch?v=VIDEO_ID"
   },
   {
     "id": 1760296166836,
