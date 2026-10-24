@@ -34,25 +34,67 @@ export default function CrackerShop({ crackers }) {
     }, 0);
   };
 
+  
   const generatePDF = () => {
+    if (Object.keys(cart).length === 0) {
+      alert("Please add items to your cart first.");
+      return;
+    }
+  
+    const customerName = window.prompt("Enter your name:");
+    if (!customerName || !customerName.trim()) {
+      alert("Name is required to generate the PDF.");
+      return;
+    }
+  
+    const societyName = window.prompt("Enter your society name:");
+    if (!societyName || !societyName.trim()) {
+      alert("Society name is required to generate the PDF.");
+      return;
+    }
+  
     const doc = new jsPDF();
-
+    const safeName = customerName
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "_")
+      .slice(0, 60) || "Customer";
+  
+    doc.setFontSize(18);
+    doc.text("Cracker Shop Invoice", 14, 20);
+  
+    doc.setFontSize(12);
+    doc.text(`Customer Name: ${customerName.trim()}`, 14, 32);
+    doc.text(`Society Name: ${societyName.trim()}`, 14, 40);
+  
     autoTable(doc, {
+      startY: 48,
       head: [["Item Name", "Quantity", "Price", "Subtotal"]],
       body: Object.entries(cart).map(([id, quantity]) => {
-        const cracker = sortedCrackers.find((c) => c.id == id);
+        const cracker = crackers.find((c) => String(c.id) === String(id));
+  
+        if (!cracker) {
+          return ["Unknown item", quantity, "-", "-"];
+        }
+  
+        const price = Number(cracker.price) || 0;
+  
         return [
           cracker.name,
           quantity,
-          `Rs. ${cracker.price}`,
-          `Rs. ${cracker.price * quantity}`,
+          `Rs. ${price}`,
+          `Rs. ${price * quantity}`,
         ];
       }),
     });
-
-    doc.text(`Total: Rs. ${getTotal()}`, 14, doc.lastAutoTable.finalY + 10);
-    doc.save("cracker_invoice.pdf");
+  
+    const finalY = doc.lastAutoTable.finalY + 10;
+    doc.setFontSize(14);
+    doc.text(`Total: Rs. ${getTotal()}`, 14, finalY);
+  
+    doc.save(`${safeName}.pdf`);
   };
+
 
   return (
     <div className="user-container">
@@ -310,31 +352,32 @@ export default function CrackerShop({ crackers }) {
         }
         
         @media (max-width: 600px) {
-          .user-container {
-            padding: 14px 10px;
+            .user-container {
+              padding: 14px 10px;
+            }
+          
+            header {
+              padding: 14px 8px;
+            }
+          
+            .product-grid {
+              grid-template-columns: 1fr;
+              gap: 14px;
+            }
+          
+            .product-card {
+              padding: 10px;
+            }
+          
+            .product-card img {
+              height: 200px;
+              object-fit: contain;
+            }
+          
+            .cart-controls {
+              gap: 12px;
+            }
           }
-        
-          header {
-            padding: 14px 8px;
-          }
-        
-          .product-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px;
-          }
-        
-          .product-card {
-            padding: 8px;
-          }
-        
-          .product-card img {
-            height: 125px;
-          }
-        
-          .cart-controls {
-            gap: 8px;
-          }
-        }
       `}</style>
     </div>
   );
