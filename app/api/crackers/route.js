@@ -2,7 +2,22 @@ import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
-const dataFilePath = path.join(process.cwd(), 'app', 'data', 'crackers.json');
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
+const dataFilePath = path.join(
+  process.cwd(),
+  'app',
+  'data',
+  'crackers.json'
+);
+
+const imageDirectory = path.join(
+  process.cwd(),
+  'public',
+  'uploads',
+  'images'
+);
 
 const readData = async () => {
   try {
@@ -15,90 +30,186 @@ const readData = async () => {
 };
 
 const writeData = async (data) => {
+  await fs.mkdir(path.dirname(dataFilePath), { recursive: true });
   await fs.writeFile(dataFilePath, JSON.stringify(data, null, 2));
 };
 
-// GET: To fetch all crackers
+const saveImage = async (image) => {
+  await fs.mkdir(imageDirectory, { recursive: true });
+
+  const originalName = image.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const filename = `${Date.now()}-${originalName}`;
+  const imagePath = path.join(imageDirectory, filename);
+
+  const buffer = Buffer.from(await image.arrayBuffer());
+  await fs.writeFile(imagePath, buffer);
+
+  return `/uploads/images/${filename}`;
+};
+
+// GET: Fetch all crackers
 export async function GET() {
-  const data = await readData();
-  return NextResponse.json(data);
+  try {
+    const data = await readData();
+
+    return NextResponse.json(data, {
+      headers: { 'Cache-Control': 'no-store' }
+    });
+  } catch (error) {
+    console.error('Failed to read crackers:', error);
+    return NextResponse.json(
+      { message: 'Failed to load crackers.' },
+      { status: 500 }
+    );
+  }
 }
 
-// DELETE: To delete a cracker
+// DELETE: Delete a cracker
 export async function DELETE(request) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get('id');
-  if (!id) {
-    return NextResponse.json({ message: 'Cracker ID is required.' }, { status: 400 });
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json(
+        { message: 'Cracker ID is required.' },
+        { status: 400 }
+      );
+    }
+
+    const data = await readData();
+    const crackerToDelete = data.find((c) => String(c.id) === String(id));
+
+    if (!crackerToDelete) {
+      return NextResponse.json(
+        { message: 'Cracker not found.' },
+        { status: 404 }
+      );
+    }
+
+    const updatedData = data.filter(
+      (c) => String(c.id) !== String(id)
+    );
+
+    await writeData(updatedData);
+
+    // Remove the image only if it is inside the uploads directory.
+    if (crackerToDelete.imageUrl?.startsWith('/uploads/images/')) {
+      const filename = path.basename(crackerToDelete.imageUrl);
+      try {
+        await fs.unlink(path.join(imageDirectory, filename));
+      } catch (error) {
+        if (error.code !== 'ENOENT') {
+          console.error('Failed to delete image:', error);
+        }
+      }
+    }
+
+    return NextResponse.json({
+      message: 'Cracker deleted successfully.'
+    });
+  } catch (error) {
+    console.error('Failed to delete cracker:', error);
+    return NextResponse.json(
+      { message: 'Failed to delete cracker.' },
+      { status: 500 }
+    );
   }
-
-  let data = await readData();
-  const crackerToDelete = data.find((c) => c.id == id);
-  if (!crackerToDelete) {
-      return NextResponse.json({ message: 'Cracker not found.' }, { status: 404 });
-  }
-
-  if (crackerToDelete.imageUrl) {
-      const imagePath = path.join(process.cwd(), 'public', crackerToDelete.imageUrl);
-      try { await fs.unlink(imagePath); } catch (error) { console.error("Failed to delete image file:", error.message); }
-  }
-
-  const updatedData = data.filter((cracker) => cracker.id != id);
-  await writeData(updatedData);
-
-  return NextResponse.json({ message: 'Cracker deleted successfully.' });
 }
 
-// POST: To add or update a cracker
+// POST: Add or update a cracker
 export async function POST(request) {
-  const formData = await request.formData();
-  const name = formData.get('name');
-  const price = formData.get('price');
-  const image = formData.get('image');
-  const isUpdate = formData.get('isUpdate') === 'true';
-  const id = formData.get('id');
+  try {
+    const formData = await request.formData();
 
-  const data = await readData();
+    const name = String(formData.get('name') || '').trim();
+    const price = String(formData.get('price') || '').trim();
+    const videoUrl = String(formData.get('videoUrl') || '').trim();
+    const image = formData.get('image');
+    const isUpdate = formData.get('isUpdate') === 'true';
+    const id = formData.get('id');
 
-  if (isUpdate) {
-    const crackerIndex = data.findIndex((c) => c.id == id);
-    if (crackerIndex === -1) {
-      return NextResponse.json({ message: 'Cracker not found.' }, { status: 404 });
+    if (!name || !price || !Number.isFinite(Number(price)) ||
+        Number(price) < 0) {
+      return NextResponse.json(
+        { message: 'A valid name and price are required.' },
+        { status: 400 }
+      );
     }
-    
-    data[crackerIndex].name = name;
-    data[crackerIndex].price = price;
 
-    if (image && image.size > 0) {
-      const buffer = Buffer.from(await image.arrayBuffer());
-      const filename = `${Date.now()}-${image.name.replace(/\s/g, '_')}`;
-      const imagePath = path.join(process.cwd(), 'public/uploads/images', filename);
-      await fs.writeFile(imagePath, buffer);
-      data[crackerIndex].imageUrl = `/uploads/images/${filename}`;
+    if (videoUrl) {
+      try {
+        const parsedUrl = new URL(videoUrl);
+        if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+          throw new Error('Invalid protocol');
+        }
+      } catch {
+        return NextResponse.json(
+          { message: 'Enter a valid HTTP or HTTPS video URL.' },
+          { status: 400 }
+        );
+      }
     }
-    
-    await writeData(data);
-    return NextResponse.json(data[crackerIndex]);
 
-  } else {
-    if (!image || image.size === 0) {
-      return NextResponse.json({ error: 'Image is required.' }, { status: 400 });
+    const data = await readData();
+
+    if (isUpdate) {
+      const crackerIndex = data.findIndex(
+        (c) => String(c.id) === String(id)
+      );
+
+      if (crackerIndex === -1) {
+        return NextResponse.json(
+          { message: 'Cracker not found.' },
+          { status: 404 }
+        );
+      }
+
+      const updatedCracker = {
+        ...data[crackerIndex],
+        name,
+        price,
+        videoUrl
+      };
+
+      if (image && typeof image.arrayBuffer === 'function' &&
+          image.size > 0) {
+        updatedCracker.imageUrl = await saveImage(image);
+      }
+
+      data[crackerIndex] = updatedCracker;
+      await writeData(data);
+
+      return NextResponse.json(updatedCracker);
     }
-    
-    const buffer = Buffer.from(await image.arrayBuffer());
-    const filename = `${Date.now()}-${image.name.replace(/\s/g, '_')}`;
-    const imagePath = path.join(process.cwd(), 'public/uploads/images', filename);
-    await fs.writeFile(imagePath, buffer);
+
+    if (!image || typeof image.arrayBuffer !== 'function' ||
+        image.size === 0) {
+      return NextResponse.json(
+        { message: 'Image is required for a new cracker.' },
+        { status: 400 }
+      );
+    }
+
+    const imageUrl = await saveImage(image);
 
     const newCracker = {
       id: Date.now(),
-      name: name,
-      price: price,
-      imageUrl: `/uploads/images/${filename}`,
+      name,
+      price,
+      imageUrl,
+      videoUrl
     };
-    
+
     data.push(newCracker);
     await writeData(data);
+
     return NextResponse.json(newCracker, { status: 201 });
+  } catch (error) {
+    console.error('Failed to save cracker:', error);
+    return NextResponse.json(
+      { message: 'Failed to save cracker.' },
+      { status: 500 }
+    );
   }
 }
