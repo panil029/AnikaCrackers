@@ -133,19 +133,19 @@
     "id": 1760296510395,
     "name": "Shots - 60 shot",
     "price": "950",
-    "imageUrl": "/uploads/images/60shot.jpg"
+    "imageUrl": "/uploads/images/60shot.png"
   },
   {
     "id": 1760296627785,
     "name": "Shots - 30 shot",
     "price": "450",
-    "imageUrl": "/uploads/images/30shot.jpg"
+    "imageUrl": "/uploads/images/30shot.png"
   },
   {
     "id": 1760296627785,
     "name": "Shots - 30 shot Multicolor",
     "price": "550",
-    "imageUrl": "/uploads/images/30Mshot.jpg"
+    "imageUrl": "/uploads/images/30Mshot.png"
   },
   {
     "id": 1760296692602,
@@ -157,7 +157,7 @@
     "id": 1760296749992,
     "name": "Fancy(kids) Multicolor Butterfly",
     "price": "90",
-    "imageUrl": "/uploads/images/butterflyy.jpg", 
+    "imageUrl": "/uploads/images/butterflyy.png", 
     "videoUrl": "https://www.youtube.com/shorts/o_LcoRdUHHU"
   },
   {
@@ -178,7 +178,7 @@
     "id": 1760297225745,
     "name": "Lad - 1K premium",
     "price": "180",
-    "imageUrl": "/uploads/images/1k.jpg"
+    "imageUrl": "/uploads/images/1k.png"
   },
   {
     "id": 1760297741567,
@@ -248,12 +248,6 @@
     "imageUrl": "/uploads/images/1760299024905-Screenshot_2025-10-13_012628.jpg"
   },
   {
-    "id": 1760299078960,
-    "name": "Chakkri - small Asoka brand",
-    "price": "58",
-    "imageUrl": "/uploads/images/1760299078950-Screenshot_2025-10-13_012722.jpg"
-  },
-  {
     "id": 1760299176983,
     "name": "Fancy - 1 Magic color fountain",
     "price": "32",
@@ -299,7 +293,7 @@
     "id": 1760299905750,
     "name": "Lad - 2K branded",
     "price": "360",
-    "imageUrl": "/uploads/images/2k.jpg"
+    "imageUrl": "/uploads/images/2k.png"
   },
   {
     "id": 1760300021224,
@@ -347,7 +341,7 @@
     "id": 1760301205363,
     "name": "Shorts - 240 BRAND",
     "price": "3300",
-    "imageUrl": "/uploads/images/240shot.jpg"
+    "imageUrl": "/uploads/images/240shot.png"
   },
   {
     "id": 1760301255776,
@@ -390,7 +384,7 @@
     "id": 1760301734696,
     "name": "SKY SHOTS - Premium Fan Cake 10 * 10 (Only Premium People)",
     "price": "6300",
-    "imageUrl": "/uploads/images/10_10cake.jpg"
+    "imageUrl": "/uploads/images/10_10cake.png"
   },
   {
     "id": 1760301828275,
@@ -462,6 +456,6 @@
     "id": 1760336905025,
     "name": "Flower Pots - Krish Big size",
     "price": "270",
-    "imageUrl": "/uploads/images/FPkrishPeacock.png.jpg"
+    "imageUrl": "/uploads/images/FPkrishPeacock.png"
   }
 ]
