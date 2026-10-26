@@ -1,6 +1,42 @@
 [
   {
     "id": 1760279190475,
+    "name": "Sky shots - Sony 12 combo pack",
+    "price": "440",
+    "imageUrl": "/uploads/images/sony12combo.png"
+  },
+  {
+    "id": 1760279190475,
+    "name": "Rocket - Silver Rocket",
+    "price": "440",
+    "imageUrl": "/uploads/images/lunikRocket.png"
+  },
+  {
+    "id": 1760279190475,
+    "name": "Bomb - Deluxe bomb",
+    "price": "440",
+    "imageUrl": "/uploads/images/Sbomb.png"
+  },
+  {
+    "id": 1760279190475,
+    "name": "Rocket - supreme Lunik Rocket",
+    "price": "440",
+    "imageUrl": "/uploads/images/lunikRocket.png"
+  },
+  {
+    "id": 1760279190475,
+    "name": "Flower Pots - Standard color gaint",
+    "price": "440",
+    "imageUrl": "/uploads/images/FPScolor.png"
+  },
+  {
+    "id": 1760279190475,
+    "name": "Chakkri - Anil Chakkr Deluxe",
+    "price": "440",
+    "imageUrl": "/uploads/images/ACdeluxe.png"
+  },
+  {
+    "id": 1760279190475,
     "name": "Shots - Supreme Aerial nuts",
     "price": "440",
     "imageUrl": "/uploads/images/Su_specialNuts.png",
@@ -59,7 +95,7 @@
     "id": 1760279190475,
     "name": "A Throw - KIDS - NO SMOKE ECO Friendly",
     "price": "180",
-    "imageUrl": "/uploads/images/1760279190470-saddam.png",
+    "imageUrl": "/uploads/images/throw.png",
     "videoUrl": "https://www.youtube.com/shorts/hpspcGoyyw8"
   },
   {
@@ -95,15 +131,21 @@
   },
   {
     "id": 1760296510395,
-    "name": "Shots - 60 Multi Colour.",
+    "name": "Shots - 60 shot",
     "price": "950",
-    "imageUrl": "/uploads/images/1760296510386-Multi_Colour_Branded_60_shot.jpg"
+    "imageUrl": "/uploads/images/60shot.jpg"
   },
   {
     "id": 1760296627785,
     "name": "Shots - 30 shot",
     "price": "450",
-    "imageUrl": "/uploads/images/1760296627775-Sky_30_shots_Branded.jpg"
+    "imageUrl": "/uploads/images/30shot.jpg"
+  },
+  {
+    "id": 1760296627785,
+    "name": "Shots - 30 shot Multicolor",
+    "price": "550",
+    "imageUrl": "/uploads/images/30Mshot.jpg"
   },
   {
     "id": 1760296692602,
@@ -115,7 +157,7 @@
     "id": 1760296749992,
     "name": "Fancy(kids) Multicolor Butterfly",
     "price": "90",
-    "imageUrl": "/uploads/images/1760296749983-Screenshot_2025-10-13_004850.jpg", 
+    "imageUrl": "/uploads/images/butterflyy.jpg", 
     "videoUrl": "https://www.youtube.com/shorts/o_LcoRdUHHU"
   },
   {
@@ -134,33 +176,15 @@
   },
   {
     "id": 1760297225745,
-    "name": "Lad - 1000 premium",
+    "name": "Lad - 1K premium",
     "price": "180",
-    "imageUrl": "/uploads/images/1760297225736-1K_Lad_branded.jpg"
-  },
-  {
-    "id": 1760297345010,
-    "name": "Flower Pot - Sri small",
-    "price": "80",
-    "imageUrl": "/uploads/images/1760297345000-Screenshot_2025-10-13_005727.jpg"
-  },
-  {
-    "id": 1760297679366,
-    "name": "Chakkri - Standard small",
-    "price": "55",
-    "imageUrl": "/uploads/images/1760297679358-Screenshot_2025-10-13_005925.jpg"
+    "imageUrl": "/uploads/images/1k.jpg"
   },
   {
     "id": 1760297741567,
     "name": "Rocket - Supreme Shitti(Whistling)",
     "price": "270",
     "imageUrl": "/uploads/images/1760297741557-Screenshot_2025-10-13_010508.jpg"
-  },
-  {
-    "id": 1760297817429,
-    "name": "Shots - 25 (Anil Man Pasand)",
-    "price": "380",
-    "imageUrl": "/uploads/images/1760297817419-Screenshot_2025-10-13_010613.jpg"
   },
   {
     "id": 1760297865730,
@@ -173,18 +197,6 @@
     "name": "Chakkri - Anil Shitti(Whistling Wheel)",
     "price": "170",
     "imageUrl": "/uploads/images/1760297952217-Screenshot_2025-10-13_010816.jpg"
-  },
-  {
-    "id": 1760298030689,
-    "name": "Shots - 12 (Anil brand)",
-    "price": "170",
-    "imageUrl": "/uploads/images/1760298030681-Screenshot_2025-10-13_010928.jpg"
-  },
-  {
-    "id": 1760298200101,
-    "name": "Fancy Chunmun color changing",
-    "price": "400",
-    "imageUrl": "/uploads/images/1760298200092-Screenshot_2025-10-13_011246.jpg"
   },
   {
     "id": 1760298273445,
@@ -219,7 +231,7 @@
   },
   {
     "id": 1760298795556,
-    "name": "Shots - 120 JOY Brand",
+    "name": "Shots - 120 Brand",
     "price": "1410",
     "imageUrl": "/uploads/images/1760298795546-Screenshot_2025-10-13_012207.jpg"
   },
@@ -287,17 +299,11 @@
     "id": 1760299905750,
     "name": "Lad - 2K branded",
     "price": "360",
-    "imageUrl": "/uploads/images/1760299905740-Screenshot_2025-10-13_014119.jpg"
-  },
-  {
-    "id": 1760299964880,
-    "name": "Fancy(kids) Jee Boom Baa",
-    "price": "15",
-    "imageUrl": "/uploads/images/1760299964870-Screenshot_2025-10-13_014204.jpg"
+    "imageUrl": "/uploads/images/2k.jpg"
   },
   {
     "id": 1760300021224,
-    "name": "Lad - Lakshmi fataka",
+    "name": "Lad - piece wise fataka",
     "price": "36",
     "imageUrl": "/uploads/images/1760300021214-Screenshot_2025-10-13_014305.jpg"
   },
@@ -308,46 +314,16 @@
     "imageUrl": "/uploads/images/1760300129086-Screenshot_2025-10-13_014504.jpg"
   },
   {
-    "id": 1760300322672,
-    "name": "Shots - 100 (ANIL brand)",
-    "price": "1400",
-    "imageUrl": "/uploads/images/1760303054875-Screenshot_2025-10-13_014746.jpg"
-  },
-  {
-    "id": 1760300411828,
-    "name": "Flower Pots (Paus) - medium Sri brand",
-    "price": "230",
-    "imageUrl": "/uploads/images/1760300411819-Screenshot_2025-10-13_014930.jpg"
-  },
-  {
     "id": 1760300495851,
     "name": "Flower Pots - small Asoka",
     "price": "120",
     "imageUrl": "/uploads/images/1760300495842-Screenshot_2025-10-13_015042.jpg"
   },
   {
-    "id": 1760300603489,
-    "name": "Shorts - 120 (ZOHO brand)",
-    "price": "1450",
-    "imageUrl": "/uploads/images/1760300603477-Screenshot_2025-10-13_015252.jpg"
-  },
-  {
-    "id": 1760300666462,
-    "name": "Chakkri - small Jay brand",
-    "price": "70",
-    "imageUrl": "/uploads/images/1760300666454-Screenshot_2025-10-13_015410.jpg"
-  },
-  {
     "id": 1760300766137,
     "name": "Chakkri - medium Anil brand",
     "price": "110",
     "imageUrl": "/uploads/images/1760300766128-Screenshot_2025-10-13_015447.jpg"
-  },
-  {
-    "id": 1760300820932,
-    "name": "Nag goli (100 piece) 10 box",
-    "price": "220",
-    "imageUrl": "/uploads/images/1760300820924-Screenshot_2025-10-13_015627.jpg"
   },
   {
     "id": 1760301027772,
@@ -359,7 +335,7 @@
     "id": 1760301061885,
     "name": "Fancy Kitkat",
     "price": "27",
-    "imageUrl": "/uploads/images/1760301061874-Screenshot_2025-10-13_020042.jpg"
+    "imageUrl": "/uploads/images/kitkatNew.png"
   },
   {
     "id": 1760301121878,
@@ -369,9 +345,9 @@
   },
   {
     "id": 1760301205363,
-    "name": "Shorts - 240 BRAND Lobo",
+    "name": "Shorts - 240 BRAND",
     "price": "3300",
-    "imageUrl": "/uploads/images/1760301205353-Screenshot_2025-10-13_020243.jpg"
+    "imageUrl": "/uploads/images/240shot.jpg"
   },
   {
     "id": 1760301255776,
@@ -386,18 +362,6 @@
     "imageUrl": "/uploads/images/1760301410884-Screenshot_2025-10-13_020625.jpg"
   },
   {
-    "id": 1760301464968,
-    "name": "Fancy Belly Dance Peacock",
-    "price": "220",
-    "imageUrl": "/uploads/images/1760301464957-Screenshot_2025-10-13_020705.jpg"
-  },
-  {
-    "id": 1760301509161,
-    "name": "Fancy Lima BRAND Peacock Throne",
-    "price": "480",
-    "imageUrl": "/uploads/images/1760301509150-Screenshot_2025-10-13_020802.jpg"
-  },
-  {
     "id": 1760301549319,
     "name": "Fancy Vanitha POM-POM water cracker",
     "price": "230",
@@ -406,9 +370,9 @@
   },
   {
     "id": 1760301592262,
-    "name": "Fancy Vanitha FLY Machine",
+    "name": "Fancy Vanitha divine",
     "price": "480",
-    "imageUrl": "/uploads/images/1760301592254-Screenshot_2025-10-13_020922.jpg"
+    "imageUrl": "/uploads/images/vanita_divine.png"
   },
   {
     "id": 1760301639804,
@@ -424,15 +388,9 @@
   },
   {
     "id": 1760301734696,
-    "name": "SKY SHOTS - Premium Fan Cake V shape shots (Only Premium People)",
+    "name": "SKY SHOTS - Premium Fan Cake 10 * 10 (Only Premium People)",
     "price": "6300",
-    "imageUrl": "/uploads/images/1760301734688-Screenshot_2025-10-13_021140.jpg"
-  },
-  {
-    "id": 1760301782320,
-    "name": "Fancy Premium Peacock Dance",
-    "price": "700",
-    "imageUrl": "/uploads/images/1760301782312-Screenshot_2025-10-13_021228.jpg"
+    "imageUrl": "/uploads/images/10_10cake.jpg"
   },
   {
     "id": 1760301828275,
@@ -441,22 +399,10 @@
     "imageUrl": "/uploads/images/1760301828263-Screenshot_2025-10-13_021324.jpg"
   },
   {
-    "id": 1760301864928,
-    "name": "FANCY Fanta Cracker fancy item",
-    "price": "410",
-    "imageUrl": "/uploads/images/1760301864918-Screenshot_2025-10-13_021402.jpg"
-  },
-  {
     "id": 1760302058405,
     "name": "Fancy - DRONE Vanitha brand",
     "price": "320",
     "imageUrl": "/uploads/images/1760302058397-Screenshot_2025-10-13_021506.jpg"
-  },
-  {
-    "id": 1760302098361,
-    "name": "Fancy - 1 Tug of War",
-    "price": "160",
-    "imageUrl": "/uploads/images/1760302098350-Screenshot_2025-10-13_021552.jpg"
   },
   {
     "id": 1760302288712,
@@ -513,15 +459,9 @@
     "imageUrl": "/uploads/images/1760336458445-Screenshot_2025-10-13_114944.jpg"
   },
   {
-    "id": 1760336595246,
-    "name": "Fancy - Anil Manoranjan",
-    "price": "250",
-    "imageUrl": "/uploads/images/1760336595239-Screenshot_2025-10-13_115208.jpg"
-  },
-  {
     "id": 1760336905025,
-    "name": "Chakkri - Big Jenis Super Deluxe",
+    "name": "Flower Pots - Krish Big size",
     "price": "270",
-    "imageUrl": "/uploads/images/1760336905017-Screenshot_2025-10-13_115813.jpg"
+    "imageUrl": "/uploads/images/FPkrishPeacock.png.jpg"
   }
 ]
