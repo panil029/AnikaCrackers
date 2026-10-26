@@ -15,7 +15,8 @@
     "id": 1760279190475,
     "name": "Bomb - Deluxe bomb",
     "price": "440",
-    "imageUrl": "/uploads/images/Sbomb.png"
+    "imageUrl": "/uploads/images/Sbomb.png",
+    "videoUrl": "https://www.youtube.com/shorts/nmu8Jcu3vbA"  
   },
   {
     "id": 1760279190475,
@@ -127,7 +128,7 @@
     "id": 1760296437536,
     "name": "Lad 5K branded",
     "price": "850",
-    "imageUrl": "/uploads/images/1760296437526-5000_Lad_branded.jpg"
+    "imageUrl": "/uploads/images/5k.png"
   },
   {
     "id": 1760296510395,
@@ -299,7 +300,7 @@
     "id": 1760300021224,
     "name": "Lad - piece wise fataka",
     "price": "36",
-    "imageUrl": "/uploads/images/1760300021214-Screenshot_2025-10-13_014305.jpg"
+    "imageUrl": "/uploads/images/ld.png"
   },
   {
     "id": 1760300129095,
