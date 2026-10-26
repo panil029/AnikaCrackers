@@ -64,13 +64,6 @@
   },
   {
     "id": 1760279190475,
-    "name": "KIDS - Vanitha POM POM Water cracker",
-    "price": "220",
-    "imageUrl": "/uploads/images/1760279190470-saddam.png",
-    "videoUrl": "https://www.youtube.com/shorts/VuvAsIoRkQI"
-  },
-  {
-    "id": 1760279190475,
     "name": "A Throw - KIDS - NO SOMKE ECO Friendly",
     "price": "180",
     "imageUrl": "/uploads/images/1760279190470-saddam.png",
@@ -413,9 +406,10 @@
   },
   {
     "id": 1760301549319,
-    "name": "Fancy Vanitha POM  POM",
+    "name": "Fancy Vanitha POM-POM water cracker",
     "price": "230",
-    "imageUrl": "/uploads/images/1760301549308-Screenshot_2025-10-13_020843.jpg"
+    "imageUrl": "/uploads/images/1760301549308-Screenshot_2025-10-13_020843.jpg",
+    "videoUrl": "https://www.youtube.com/shorts/VuvAsIoRkQI"
   },
   {
     "id": 1760301592262,
