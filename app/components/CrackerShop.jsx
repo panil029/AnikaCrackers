@@ -1,12 +1,26 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 export default function CrackerShop({ crackers }) {
   const [cart, setCart] = useState({});
   const [sortType, setSortType] = useState("name"); // default sort by name
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  useEffect(() => {
+    if (!selectedImage) return;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setSelectedImage(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedImage]);
 
   const addToCart = (crackerId) => {
     setCart((prev) => ({ ...prev, [crackerId]: (prev[crackerId] || 0) + 1 }));
@@ -130,7 +144,20 @@ export default function CrackerShop({ crackers }) {
       <main className="product-grid">
         {sortedCrackers.map((cracker) => (
           <div key={cracker.id} className="product-card">
-            <img src={cracker.imageUrl} alt={cracker.name} />
+            <img
+              src={cracker.imageUrl}
+              alt={cracker.name}
+              className="product-image"
+              onClick={() => setSelectedImage(cracker)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSelectedImage(cracker);
+                }
+              }}
+            />
 
             {cracker.videoUrl?.trim() && (
               <a
@@ -169,6 +196,34 @@ export default function CrackerShop({ crackers }) {
             Download PDF
           </button>
         </footer>
+      )}
+
+      {selectedImage && (
+        <div
+          className="image-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${selectedImage.name} image preview`}
+          onClick={() => setSelectedImage(null)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") setSelectedImage(null);
+          }}
+        >
+          <button
+            type="button"
+            className="image-modal-close"
+            onClick={() => setSelectedImage(null)}
+            aria-label="Close image preview"
+          >
+            &times;
+          </button>
+          <img
+            src={selectedImage.imageUrl}
+            alt={selectedImage.name}
+            className="image-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
       )}
 
       <style jsx>{`
@@ -251,6 +306,56 @@ export default function CrackerShop({ crackers }) {
           background: #f5eee3;
         }
         
+        .product-image {
+          cursor: zoom-in;
+        }
+
+        .image-modal {
+          position: fixed;
+          inset: 0;
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          background: rgba(0, 0, 0, 0.85);
+        }
+
+        .image-modal-content {
+          display: block;
+          max-width: 95vw;
+          max-height: 85vh;
+          width: auto;
+          height: auto;
+          object-fit: contain;
+          border-radius: 8px;
+          cursor: default;
+        }
+
+        .image-modal-close {
+          position: absolute;
+          top: 15px;
+          right: 20px;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 44px;
+          height: 44px;
+          padding: 0;
+          border: none;
+          border-radius: 50%;
+          background: #ffffff;
+          color: #702632;
+          font-size: 32px;
+          line-height: 1;
+          cursor: pointer;
+        }
+
+        .image-modal-close:hover {
+          background: #fff0dc;
+        }
+
         .product-card h3 {
           min-height: 42px;
           margin: 12px 0 8px;
