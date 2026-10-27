@@ -277,9 +277,10 @@
   },
   {
     "id": 1760301027772,
-    "name": "Shots -50 (Dil Khush brand)",
-    "price": "920",
-    "imageUrl": "/uploads/images/1760301027763-Screenshot_2025-10-13_015838.jpg"
+    "name": "Shots -50 (ANIL brand Dil Khush brand)",
+    "price": "920", 
+    "imageUrl": "/uploads/images/1760301027763-Screenshot_2025-10-13_015838.jpg",
+    "videoUrl": "https://www.youtube.com/watch?v=nWH9hmGf_p8"
   },
   {
     "id": 1760296510395,
