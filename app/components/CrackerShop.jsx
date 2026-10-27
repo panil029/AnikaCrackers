@@ -114,7 +114,8 @@ export default function CrackerShop({ crackers }) {
     <div className="user-container">
       <header>
         <h1>|| Shree Ganeshay Namah ||</h1>
-        <h1>💥 Cracker Shop [Contact - Anil 8446869619 ] 💥</h1>
+        <h1>💥 Friendly Cracker Shop [Help/Contact - Anil 8446869619 ] 💥</h1>
+        <h2> NOTE : Click on image to enlarge and Videos also available, click on link below cracker </h2>
       </header>
 
       {/* 🔘 Sort Controls */}
