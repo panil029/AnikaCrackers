@@ -22,9 +22,30 @@ export default function CrackerShop({ crackers }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedImage]);
 
+  // Products without an InStock property are treated as in stock.
   const addToCart = (crackerId) => {
-    setCart((prev) => ({ ...prev, [crackerId]: (prev[crackerId] || 0) + 1 }));
+    const cracker = crackers.find((item) => String(item.id) === String(crackerId));
+    if (!cracker || cracker.InStock === false) return;
+
+    setCart((prev) => ({
+      ...prev,
+      [crackerId]: (prev[crackerId] || 0) + 1
+    }));
   };
+
+  // Remove products from the cart if they become out of stock.
+  useEffect(() => {
+    setCart((prev) => {
+      const nextCart = { ...prev };
+
+      Object.keys(nextCart).forEach((id) => {
+        const cracker = crackers.find((item) => String(item.id) === String(id));
+        if (!cracker || cracker.InStock === false) delete nextCart[id];
+      });
+
+      return nextCart;
+    });
+  }, [crackers]);
 
   const removeFromCart = (crackerId) => {
     setCart((prev) => {
@@ -43,8 +64,9 @@ export default function CrackerShop({ crackers }) {
 
   const getTotal = () => {
     return Object.entries(cart).reduce((total, [id, quantity]) => {
-      const cracker = sortedCrackers.find((c) => c.id == id);
-      return total + (cracker ? cracker.price * quantity : 0);
+      const cracker = sortedCrackers.find((c) => String(c.id) === String(id));
+      if (!cracker || cracker.InStock === false) return total;
+      return total + ((Number(cracker.price) || 0) * quantity);
     }, 0);
   };
 
@@ -84,22 +106,22 @@ export default function CrackerShop({ crackers }) {
     autoTable(doc, {
       startY: 48,
       head: [["Item Name", "Quantity", "Price", "Subtotal"]],
-      body: Object.entries(cart).map(([id, quantity]) => {
-        const cracker = crackers.find((c) => String(c.id) === String(id));
-  
-        if (!cracker) {
-          return ["Unknown item", quantity, "-", "-"];
-        }
-  
-        const price = Number(cracker.price) || 0;
-  
-        return [
-          cracker.name,
-          quantity,
-          `Rs. ${price}`,
-          `Rs. ${price * quantity}`,
-        ];
-      }),
+      body: Object.entries(cart)
+        .filter(([id]) => {
+          const cracker = crackers.find((c) => String(c.id) === String(id));
+          return cracker && cracker.InStock !== false;
+        })
+        .map(([id, quantity]) => {
+          const cracker = crackers.find((c) => String(c.id) === String(id));
+          const price = Number(cracker.price) || 0;
+
+          return [
+            cracker.name,
+            quantity,
+            `Rs. ${price}`,
+            `Rs. ${price * quantity}`,
+          ];
+        }),
     });
   
     const finalY = doc.lastAutoTable.finalY + 10;
@@ -114,7 +136,7 @@ export default function CrackerShop({ crackers }) {
     <div className="user-container">
       <header>
         <h1>|| Shree Ganeshay Namah ||</h1>
-        <h1>💥 Friendly Cracker Shop [Help/Contact - Anil 8446869619 ] 💥</h1>
+        <h1>💥 Friendly Cracker Shop [Contact - <b>Akshay - 9922759593</b> | <b>Jyotsna - 8830445452</b>] 💥</h1>
         <h2> NOTE : Click on image to enlarge and Videos also available, click on link below cracker </h2>
       </header>
 
@@ -144,16 +166,29 @@ export default function CrackerShop({ crackers }) {
 
       <main className="product-grid">
         {sortedCrackers.map((cracker) => (
-          <div key={cracker.id} className="product-card">
+          <div
+            key={cracker.id}
+            className={`product-card ${cracker.InStock === false ? "out-of-stock-card" : ""}`}
+            aria-disabled={cracker.InStock === false}
+          >
+            {cracker.InStock === false && (
+              <div className="out-of-stock-label">OUT OF STOCK</div>
+            )}
+
             <img
               src={cracker.imageUrl}
               alt={cracker.name}
               className="product-image"
-              onClick={() => setSelectedImage(cracker)}
-              role="button"
-              tabIndex={0}
+              onClick={() => {
+                if (cracker.InStock !== false) setSelectedImage(cracker);
+              }}
+              role={cracker.InStock === false ? undefined : "button"}
+              tabIndex={cracker.InStock === false ? -1 : 0}
               onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
+                if (
+                  cracker.InStock !== false &&
+                  (e.key === "Enter" || e.key === " ")
+                ) {
                   e.preventDefault();
                   setSelectedImage(cracker);
                 }
@@ -162,26 +197,36 @@ export default function CrackerShop({ crackers }) {
 
             {cracker.videoUrl?.trim() && (
               <a
-                href={cracker.videoUrl}
+                href={cracker.InStock === false ? undefined : cracker.videoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="video-link"
+                tabIndex={cracker.InStock === false ? -1 : 0}
+                aria-disabled={cracker.InStock === false}
+                onClick={(e) => {
+                  if (cracker.InStock === false) e.preventDefault();
+                }}
               >
                 Watch video here!
               </a>
             )}
-            
+
             <h3>{cracker.name}</h3>
             <p className="price">₹{cracker.price}</p>
             <div className="cart-controls">
               <button
                 onClick={() => removeFromCart(cracker.id)}
-                disabled={!cart[cracker.id]}
+                disabled={cracker.InStock === false || !cart[cracker.id]}
               >
                 -
               </button>
-              <span>{cart[cracker.id] || 0}</span>
-              <button onClick={() => addToCart(cracker.id)}>+</button>
+              <span>{cracker.InStock === false ? 0 : (cart[cracker.id] || 0)}</span>
+              <button
+                onClick={() => addToCart(cracker.id)}
+                disabled={cracker.InStock === false}
+              >
+                +
+              </button>
             </div>
           </div>
         ))}
@@ -296,6 +341,40 @@ export default function CrackerShop({ crackers }) {
         .product-card:hover {
           transform: translateY(-3px);
           box-shadow: 0 7px 18px rgba(75, 35, 25, 0.14);
+        }
+
+        .out-of-stock-card {
+          position: relative;
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        .out-of-stock-card:hover {
+          transform: none;
+          box-shadow: 0 3px 10px rgba(75, 35, 25, 0.08);
+        }
+
+        .out-of-stock-card * {
+          pointer-events: none;
+        }
+
+        .out-of-stock-label {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          z-index: 2;
+          transform: translate(-50%, -50%) rotate(-12deg);
+          padding: 9px 14px;
+          border: 2px solid #ffffff;
+          border-radius: 6px;
+          background: #702632;
+          color: #ffffff;
+          font-size: 16px;
+          font-weight: 900;
+          letter-spacing: 1px;
+          white-space: nowrap;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+          pointer-events: none;
         }
         
         .product-card img {
