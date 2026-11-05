@@ -1,5 +1,19 @@
 [
   {
+    "id": 1761000001016,
+    "name": "Shots 60",
+    "price": "980",
+    "imageUrl": "/uploads/images/60shott.png",
+    "InStock": true
+  },
+  {
+    "id": 1761000001017,
+    "name": "Chakkri Standard Super Deluxe",
+    "price": "420",
+    "imageUrl": "/uploads/images/sSuperDelx.png",
+    "InStock": true
+  },
+  {
     "id": 1761000000017,
     "name": "Skyshot 12 - Supreme Ariel",
     "price": "260",
@@ -18,7 +32,7 @@
     "name": "Chhota Bheem",
     "price": "230",
     "imageUrl": "/uploads/images/cBheem.png",
-    "InStock": true
+    "InStock": false
   },
   {
     "id": 1761000000006,
@@ -101,7 +115,7 @@
   {
     "id": 1760336905026,
     "name": "Bomb - Deluxe bomb",
-    "price": "330",
+    "price": "300",
     "imageUrl": "/uploads/images/Sbomb.png",
     "videoUrl": "https://www.youtube.com/shorts/nmu8Jcu3vbA",
     "InStock": true
@@ -122,7 +136,7 @@
   },
   {
     "id": 1760336905029,
-    "name": "Chakkri - Anil Chakkr Deluxe",
+    "name": "Chakkri - Deluxe Anil brand",
     "price": "280",
     "imageUrl": "/uploads/images/ACdeluxe.png",
     "InStock": true
@@ -131,29 +145,29 @@
     "id": 1760297952226,
     "name": "Chakkri - Anil Shitti(Whistling Wheel)",
     "price": "180",
-    "imageUrl": "/uploads/images/1760297952217-Screenshot_2025-10-13_010816.jpg",
+    "imageUrl": "/uploads/images/whistle.png",
     "InStock": true
   },
   {
     "id": 1760300129095,
-    "name": "Chakkri - Standard Brand",
-    "price": "120",
+    "name": "Chakkri - Standard Brand Asoka",
+    "price": "140",
     "imageUrl": "/uploads/images/1760300129086-Screenshot_2025-10-13_014504.jpg",
     "InStock": true
   },
   {
     "id": 1760300766137,
-    "name": "Chakkri - medium Anil brand",
-    "price": "130",
-    "imageUrl": "/uploads/images/1760300766128-Screenshot_2025-10-13_015447.jpg",
+    "name": "Chakkri - medium",
+    "price": "170",
+    "imageUrl": "/uploads/images/chkrSpcl.png",
     "InStock": true
   },
   {
     "id": 1760299453311,
-    "name": "Chakkri - medium Deluxe brand",
+    "name": "Chakkri - medium Deluxe",
     "price": "170",
     "imageUrl": "/uploads/images/1760299453301-Screenshot_2025-10-13_013318.jpg",
-    "InStock": true
+    "InStock": false
   },
   {
     "id": 1760336905030,
@@ -161,7 +175,7 @@
     "price": "560",
     "imageUrl": "/uploads/images/FbadaPeacock.png",
     "videoUrl": "https://www.youtube.com/shorts/xTr6MYVyGW4",
-    "InStock": false
+    "InStock": true
   },
   {
     "id": 1760336905031,
@@ -176,7 +190,7 @@
     "name": "Fancy Googly the spinner green",
     "price": "140",
     "imageUrl": "/uploads/images/1760301639795-Screenshot_2025-10-13_021029.jpg",
-    "InStock": true
+    "InStock": false
   },
   {
     "id": 1760301061885,
@@ -198,7 +212,7 @@
     "price": "270",
     "imageUrl": "/uploads/images/1760301549308-Screenshot_2025-10-13_020843.jpg",
     "videoUrl": "https://www.youtube.com/shorts/VuvAsIoRkQI",
-    "InStock": true
+    "InStock": false
   },
   {
     "id": 1760296749992,
@@ -217,14 +231,14 @@
   },
   {
     "id": 1760298449029,
-    "name": "Flower Pots - BIG Super Deluxe Colour Koti",
+    "name": "Flower Pots - Super Deluxe Colour Koti",
     "price": "340",
     "imageUrl": "/uploads/images/1760298449020-Screenshot_2025-10-13_011623.jpg",
     "InStock": true
   },
   {
     "id": 1760336905025,
-    "name": "Flower Pots - Krish size",
+    "name": "Flower Pots - Krish medium size",
     "price": "310",
     "imageUrl": "/uploads/images/FPkrishPeacock.png",
     "InStock": true
@@ -272,7 +286,7 @@
     "name": "Lad - 10K branded",
     "price": "2000",
     "imageUrl": "/uploads/images/1760296314849-1000_Lad_branded.jpg",
-    "InStock": true
+    "InStock": false
   },
   {
     "id": 1760297225745,
@@ -284,7 +298,7 @@
   {
     "id": 1760299905750,
     "name": "Lad - 2K branded",
-    "price": "350",
+    "price": "320",
     "imageUrl": "/uploads/images/2k.png",
     "InStock": true
   },
@@ -306,7 +320,21 @@
     "id": 1760300021224,
     "name": "Lad - piece wise fataka",
     "price": "22",
+    "imageUrl": "/uploads/images/2sound.png",
+    "InStock": true
+  },
+  {
+    "id": 1760300021224,
+    "name": "2 Sound (Like Laxmi bomb 2 sound)",
+    "price": "50",
     "imageUrl": "/uploads/images/ld.png",
+    "InStock": true
+  },
+  {
+    "id": 1760300021224,
+    "name": " Laxmi Bomb",
+    "price": "40",
+    "imageUrl": "/uploads/images/LaxmiBomb.png",
     "InStock": true
   },
   {
@@ -548,17 +576,24 @@
     "InStock": true
   },
   {
+    "id": 1760302609547,
+    "name": "Sur-suri GIANT",
+    "price": "230",
+    "imageUrl": "/uploads/images/bigSuri.png",
+    "InStock": true
+  },
+  {
     "id": 1760299191972,
-    "name": "Tof - 1 Inch (image is different)",
+    "name": "Tof - 1 Inch",
     "price": "30",
-    "imageUrl": "/uploads/images/1760306692888-Screenshot_2025-10-13_013125.jpg",
+    "imageUrl": "/uploads/images/1inchh.png",
     "InStock": true
   },
   {
     "id": 1760299319648,
     "name": "Tof - 2 inch",
-    "price": "48",
-    "imageUrl": "/uploads/images/1760299319639-Screenshot_2025-10-13_013125.jpg",
+    "price": "40",
+    "imageUrl": "/uploads/images/2inchh.png",
     "InStock": true
   }
 ]
