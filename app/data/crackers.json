@@ -341,14 +341,14 @@
     "id": 1760300021224,
     "name": "Lad - piece wise fataka",
     "price": "22",
-    "imageUrl": "/uploads/images/2sound.png",
+    "imageUrl": "/uploads/images/ld.png",
     "InStock": true
   },
   {
     "id": 1762000000003,
     "name": "2 Sound (Like Laxmii bomb 2 sound)",
-    "price": "55",
-    "imageUrl": "/uploads/images/ld.png",
+    "price": "80",
+    "imageUrl": "/uploads/images/2sound.png",
     "InStock": true
   },
   {
